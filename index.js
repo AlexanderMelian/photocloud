@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const app = express();
+const path = require('path');
 
 // enable CORS
 // app.use(cors());
@@ -9,6 +10,9 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
+
+app.set('view engine', 'pug');
+app.use('/static', express.static(path.join(__dirname, '/public/uploads')))
 
 app.use(require('./src/routes'))
 
