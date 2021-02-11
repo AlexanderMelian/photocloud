@@ -90,26 +90,21 @@ router.post('/multiupload', uploadImage.array('files', 50), async (req, res) => 
 //---------------------------------------------------------------------------------------
 router.get('/get-images', (req, res) => {
     let images = getImagesFromDir(path.join(__dirname, '../public/uploads'));
-    res.render('index', { title: 'Node js – Auto Generate a Photo Gallery from a Directory', images: images})
+    res.render('index', { title: 'Gallery', images: images})
 });
 
 // dirPath: target image directory
 function getImagesFromDir(dirPath) {
 
-    // All iamges holder, defalut value is empty
     let allImages = [];
-
-    // Iterator over the directory
     let files = fs.readdirSync(dirPath);
-
-    // Iterator over the files and push jpg and png images to allImages array.
     for (file of files) {
         let fileLocation = path.join(dirPath, file);
         var stat = fs.statSync(fileLocation);
         if (stat && stat.isDirectory()) {
-            getImagesFromDir(fileLocation); // process sub directories
-        } else if (stat && stat.isFile() && ['.jpg', '.png'].indexOf(path.extname(fileLocation)) != -1) {
-            allImages.push('static/'+file); // push all .jpf and .png files to all images 
+            getImagesFromDir(fileLocation);
+        } else if (stat && stat.isFile() && ['.jpg', '.png','.jpeg'].indexOf(path.extname(fileLocation)) != -1) {
+            allImages.push('static/'+file);
         }
     }
 
