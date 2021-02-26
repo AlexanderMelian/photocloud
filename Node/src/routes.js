@@ -4,8 +4,7 @@ const router = new Router();
 const path = require('path');
 const multer = require('multer');
 const fs = require('fs');
-
-
+//const { pool } = require('../database');
 
 const storage = multer.diskStorage({
     destination: path.join(__dirname, '../public/uploads'),
@@ -88,14 +87,13 @@ router.post('/multiupload', uploadImage.array('files', 50), async (req, res) => 
     }
 });
 //---------------------------------------------------------------------------------------
-router.get('/get-images', (req, res) => {
+router.get('/get-images', (req, res) => {//https://arjunphp.com/node-js-auto-generate-photo-gallery-directory/ THANKS
     let images = getImagesFromDir(path.join(__dirname, '../public/uploads'));
     res.render('index', { title: 'Gallery', images: images})
 });
 
 // dirPath: target image directory
 function getImagesFromDir(dirPath) {
-
     let allImages = [];
     let files = fs.readdirSync(dirPath);
     for (file of files) {
@@ -107,9 +105,29 @@ function getImagesFromDir(dirPath) {
             allImages.push('static/'+file);
         }
     }
-
     // return all images in array formate
     return allImages;
 }
+
+//-----------------------------------------------------------------------------------------------
+/*router.get('/testquery', async (req, res) => {
+    sampleQuery();
+    res.send();
+})*/
+
+//----------------------------------------------------------
+router.get('/deleteimage',(req, res)=>{
+    res.sendFile(path.join(__dirname,'../public/deleteimage.html'))
+})
+
+router.post('/deleteimage',  (req, res) =>{
+    var pathfile = path.join(__dirname , '../public/uploads/' , req.body.id)
+    fs.unlink(pathfile,(err)=>{
+        if(err){
+            console.log(err)
+            return
+        }
+    } )
+})
 
 module.exports = router;
