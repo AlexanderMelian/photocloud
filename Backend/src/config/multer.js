@@ -1,18 +1,11 @@
 import path from 'path';
 import multer from 'multer';
 
-
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-
 export const multerConfig = {
-  destination: path.join(__dirname, '../public/uploads'),
+  destination: path.join('/public/uploads'),
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, path.resolve(__dirname, '..', '..', 'tmp', 'uploads'));
+      cb(null, path.resolve('tmp', 'uploads'));
     },
     filename: (req, file, cb) => {
       const ext = path.extname(file.originalname);

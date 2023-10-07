@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+</head>
+<body>
+    <h1><%= title %></h1>
+    <ul>
+        <% images.forEach(function(image) { %>
+            <li>
+                <a href="<%= image %>">
+                    <img src="<%= image %>" width="300">
+                </a>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>

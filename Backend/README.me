@@ -1,13 +1,24 @@
 variables
 
-DB_HOST
 DB_USER
-DB_PASSWORD
+DB_ROOT_PASSWORD
 DB_DATABASE
-
-APP_URL
-APP_PORT
-
-
+DB_DOCKER_PORT
 SECRET_TOKEN
+APP_URL
+NODE_DOCKER_PORT
 
+
+
+endpoints
+
+/api/photos
+"/" get secured
+"/" post secured | formdata - 'image'
+
+
+
+/api/users
+
+"/" post | json{ "username":"amelian","email":"amelian@email.com","password":"111"}
+"/login" post | json{"email":"amelian@email.com","password":"111"}

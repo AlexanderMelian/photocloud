@@ -5,6 +5,7 @@ import { Photo } from "./src/model/photo.js";
 async function main(){
     await sequelize.sync({force: true})
     app.listen(process.env.APP_PORT);
+    app.set('view engine', 'ejs');
     console.log('App en puerto', process.env.APP_PORT)
 }
 

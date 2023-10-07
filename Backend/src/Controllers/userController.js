@@ -67,7 +67,3 @@ export async function login(req, res) {
     });
   }
 }
-
-export async function hello(req,res){
-    return res.json("OK")
-}

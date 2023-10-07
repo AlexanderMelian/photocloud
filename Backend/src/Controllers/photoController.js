@@ -1,4 +1,6 @@
 import { Photo } from "../model/photo.js"
+import { dirname , join , extname } from 'path';
+import { statSync , readdirSync } from 'fs';
 
 
 export async function singleStore(req, res){
@@ -11,8 +13,7 @@ export async function singleStore(req, res){
         data: 'No file is selected.',
       });
     }
-    let user_id = req.userId
-    console.log(user_id)
+    let user_id = 1
     const photoCreated = await Photo.create({
       name,
       user_id,
@@ -34,4 +35,27 @@ export async function singleStore(req, res){
       message: 'Internal server error.',
     });
   }
+}
+
+
+export async function getImages(req, res){
+  let images = getImagesFromDir('/usr/src/app/tmp/uploads');
+  res.render('index', { title: 'Gallery', images: images})
+}
+
+function getImagesFromDir(dirPath) {
+  let allImages = [];
+  let files = readdirSync(dirPath);
+  for (let file of files) {
+    let fileLocation = join(dirPath, file);
+    var stat = statSync(fileLocation);
+    if (stat && stat.isDirectory()) {
+      // Recursión
+      allImages = allImages.concat(getImagesFromDir(fileLocation));
+    } else if (stat && stat.isFile() && ['.jpg', '.png', '.jpeg'].indexOf(extname(fileLocation)) != -1) {
+      allImages.push('static/' + file);
+    }
+  }
+  // Retorna todas las imágenes en el nivel actual de la recursión
+  return allImages;
 }
