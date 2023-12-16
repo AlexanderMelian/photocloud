@@ -7,10 +7,6 @@ import { fileURLToPath } from 'url';
 import userRoutes from "./routes/userRoutes.js"
 import photoRoutes from "./routes/photoRoutes.js"
 
-
-console.log(process.env.DB_HOST)
-console.log(process.env.DB_USER)
-
 const app = express();
 
 app.use(bodyParser.json());
