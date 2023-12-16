@@ -50,10 +50,10 @@ function getImagesFromDir(dirPath) {
     let fileLocation = join(dirPath, file);
     var stat = statSync(fileLocation);
     if (stat && stat.isDirectory()) {
-      // Recursión
       allImages = allImages.concat(getImagesFromDir(fileLocation));
     } else if (stat && stat.isFile() && ['.jpg', '.png', '.jpeg'].indexOf(extname(fileLocation)) != -1) {
-      allImages.push('static/' + file);
+      let relativePath = path.relative('/usr/src/app/tmp/uploads', fileLocation);
+      allImages.push('static/' + relativePath);
     }
   }
   // Retorna todas las imágenes en el nivel actual de la recursión
