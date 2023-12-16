@@ -4,6 +4,7 @@ import { User } from "./src/model/user.js";
 import { Photo } from "./src/model/photo.js";
 async function main(){
 
+    console.log(process.env.DB_PASSWORD)
     console.log(process.env.DB_HOST)
     console.log(process.env.DB_USER)
     await sequelize.sync({force: true})
